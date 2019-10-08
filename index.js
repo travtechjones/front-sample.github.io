@@ -1,6 +1,7 @@
 var conversation;
 
 function unassign() {
+  console.log('unassign', Front);
   Front.unassign(conversation);
 }
 
