@@ -1,48 +1,63 @@
-// Listen for the conversation event from Front and print its contents, then load the contact to the plugin.
+// Listen for the `conversation` event from Front and print its contents, then load the contact to the plugin.
 Front.on('conversation', function (data) {
-  console.log('Conversation', data.conversation);
-  console.log('Contact', data.contact);
-  console.log('Message', data.message);
-  console.log('OtherMessages', data.otherMessages);
-  loadContact(data.contact)
+  console.log('Event data', data);
+
+  // Load the Contact information based off of the event data.
+  loadContact(data.contact);
 });
 
+// Listen for the `no_conversation` event.  This can happen when opened to Inbox Zero.
 Front.on('no_conversation', function () {
   console.log('No conversation');
+
+  // Display `No Contact` data and clear the notes.
+  displayContactInfo ("No Contact", "-");
+  displayCRMInfo("-", "-", "-");
+  clearNotes();
 });
 
 // Loads the contact once the body of the plugin is loaded.
-// This will call our CRM service for mocked data and then add the contact info and notes to the page.
+// This will call our mocked CRM service for data and then add the contact information and notes to the page.
 function loadContact(contact) {
-  const noteColumns = document.getElementById("notes");
-  noteColumns.innerHTML = "";
+  // Display Front contact info.
+  displayContactInfo(contact.display_name, contact.handle);
 
+  // Build and display our CRM data.
   const crmData = mockQueryCRM(contact.handle);
-  displayContact(contact, crmData);
+  displayCRMInfo(crmData.info.id, crmData.info.location, crmData.info.status);
+
+  // Clear the notes to make space for the new notes from our mocked CRM data.
+  clearNotes();
+  displayNotes(crmData.notes);
 }
 
-// Ingests the contact and crmData and adds the data to our plugin visually.
-function displayContact(contact, crmData) {
+// Displays Front contact information.
+function displayContactInfo (display_name, handle) {
   const name = document.getElementById("name");
   const handle = document.getElementById("handle");
 
-  // Use information from our Front `conversation` event to load contact information.
-  name.innerHTML = contact.display_name;
-  handle.innerHTML = contact.handle;
+  name.innerHTML = display_name;
+  handle.innerHTML = handle;
+}
 
+// Displays mocked CRM Info.
+function displayCRMInfo (id, location, status) {
   const id = document.getElementById("id");
   const location = document.getElementById("location");
   const status = document.getElementById("status");
 
-  id.innerHTML = crmData.info.id;
-  location.innerHTML = crmData.info.location;
-  status.innerHTML = crmData.info.status;
+  id.innerHTML = id;
+  location.innerHTML = location;
+  status.innerHTML = status;
+}
 
+// Displays the mocked CRM notes.
+function displayNotes(notes) {
   // Find the Notes Column object.
   const noteColumns = document.getElementById("notes");
 
   // Add each Note to the Notes Column object.
-  crmData.notes.forEach(note => {
+  notes.forEach(note => {
     let noteBlock = document.createElement("div");
 
     let noteTitle = document.createElement("p");
@@ -63,11 +78,18 @@ function displayContact(contact, crmData) {
   });
 }
 
+// Removes the currently displayed Notes.
+function clearNotes() {
+  const noteColumns = document.getElementById("notes");
+  noteColumns.innerHTML = "";
+}
+
 //Code below this comment is just mocked data and can be used as a black box, or altered to be used as a sandbox.
 
 // This function returns mock CRM data and is being used as an analog for your functionality being added to the plugin.  
 // This simply picks random data and organizes it.
 function mockQueryCRM(email) {
+  console.log(`Build mock CRM data for ${email}`);
   const infoIndex = Math.floor(Math.random() * 4);
   const info = {
     id: Math.floor(Math.random() * 1000),
