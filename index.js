@@ -10,16 +10,17 @@ const contact = {
   role: "reply-to",
   num_notes: 0
 }
-
 function loadContact() {
+  const crmData = mockQueryCRM(contact.handle);
+  displayContact(crmData);
+}
+
+function displayContact(crmData) {
   const name = document.getElementById("name");
   const handle = document.getElementById("handle");
 
   name.innerHTML = contact.display_name;
   handle.innerHTML = contact.handle;
-
-  const crmData = mockQueryCRM(contact.handle);
-  console.log('crmDasdfta', crmData);
 
   const id = document.getElementById("id");
   const location = document.getElementById("location");
@@ -31,6 +32,8 @@ function loadContact() {
 
   const noteColumns = document.getElementById("notes");
   crmData.notes.forEach(note => {
+    let noteBlock = document.createElement("div");
+
     let noteTitle = document.createElement("p");
     let noteTitleText = document.createTextNode(`${note.date} - ${note.author}`);
     noteTitle.classList.add("row", "bold", "font");
@@ -40,14 +43,20 @@ function loadContact() {
     let noteBlurbText = document.createTextNode(note.blurb);
     noteBlurb.classList.add("row", "font");
     noteBlurb.appendChild(noteBlurbText);
+    noteBlurb.classList.add("noteBlock");
 
 
-    noteColumns.appendChild(noteTitle);
-    noteColumns.appendChild(noteBlurb);
-  })
-    // avatar.classList.add("avatar");
+    noteBlock.appendChild(noteTitle);
+    noteBlock.appendChild(noteBlurb);
+    noteColumns.appendChild(noteBlock);
+  });
 }
 
+
+
+
+
+//////////////////////////////////////////////////////////////
 function mockQueryCRM(email) {
   const info = {
     id: Math.floor(Math.random() * 1000),
