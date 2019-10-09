@@ -36,7 +36,7 @@ function displayContactInfo (display_name, handle) {
   const nameElement = document.getElementById("name");
   const handleElement = document.getElementById("handle");
 
-  nameElement.innerHTML = display_name;
+  nameElement.innerHTML = display_name || handle;
   handleElement.innerHTML = handle;
 }
 
@@ -94,18 +94,18 @@ function mockQueryCRM(email) {
   const info = {
     id: Math.floor(Math.random() * 1000),
     location: 'Fake Company HQ',
-    status: statuses[infoIndex]
+    status: mockStatuses[infoIndex]
   }
 
   let notes = [];
-  notes.push(notesSamples[infoIndex]);
-  notes.push(notesSamples[infoIndex + 4]);
+  notes.push(mockNotesSamples[infoIndex]);
+  notes.push(mockNotesSamples[infoIndex + 4]);
   return {notes, info};
 }
 
 // Here's some fake CRM data to display in the plugin.
-const statuses = ['Open', 'Closed', 'Won', 'Blocked'];
-const notesSamples = [
+const mockStatuses = ['Open', 'Closed', 'Won', 'Blocked'];
+const mockNotesSamples = [
   {
     date: "10/10/19",
     author: "Phillip Fry",
@@ -113,23 +113,23 @@ const notesSamples = [
   },
   {
     date: "10/10/19",
-    author: "Professor Fansworth",
+    author: "Professor Farnsworth",
     blurb: "Lead confused about the offering."
   },
   {
     date: "10/12/19",
-    author: "Leela",
+    author: "Turanga Leela",
     blurb: "Missed their call."
   },
   {
     date: "10/01/19",
-    author: "Bender",
+    author: "Bender Rodriguez",
     blurb: "Congrats on the sale!"
   },
   {
     date: "07/10/19",
     author: "Doctor Zoidberg",
-    blurb: "Running late.  Be there in 5!"
+    blurb: "Running late. Be there in 5!"
   },
   {
     date: "08/19/19",
