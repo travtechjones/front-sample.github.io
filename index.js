@@ -7,11 +7,10 @@ Front.on('conversation', function (data) {
   loadContact(data.contact)
 });
 
-const noteColumns = document.getElementById("notes");
-
 // Loads the contact once the body of the plugin is loaded.
 // This will call our CRM service for mocked data and then add the contact info and notes to the page.
 function loadContact(contact) {
+  const noteColumns = document.getElementById("notes");
   noteColumns.innerHTML = "";
 
   const crmData = mockQueryCRM(contact.handle);
@@ -35,7 +34,10 @@ function displayContact(contact, crmData) {
   location.innerHTML = crmData.info.location;
   status.innerHTML = crmData.info.status;
 
-  // Then add each Note to the Note Columns object.
+  // Find the Notes Column object.
+  const noteColumns = document.getElementById("notes");
+
+  // Add each Note to the Notes Column object.
   crmData.notes.forEach(note => {
     let noteBlock = document.createElement("div");
 
