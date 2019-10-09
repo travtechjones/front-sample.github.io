@@ -1,17 +1,121 @@
 <html>
   <head>
-    <script type="text/javascript" src="https://dl.frontapp.com/libs/frontjs.min.js"></script>
+    <style>
+      .plugin-div {
+        background-color: #f8f8f8;
+        height: 100%;
+        width: 300px;
+        margin: 40px;
+        padding: 20px 6px 20px 6px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .font {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 13px;
+        font-weight: 300
+      }
+
+      .bold {
+        font-weight: 400;
+        font-size: 14px;
+      }
+
+      .name {
+        font-size: 20px;
+        font-weight: 600;
+        color: #2684ff 
+      }
+      .handle {
+        font-size: 12px;
+        color: #a0a0a0;
+      }
+
+      .separator {
+        height: 1px;
+        width: 100%;
+        background-color: #a0a0a0;
+        margin: 18px 0px 18px 0px
+      }
+
+      .title {
+        font-size: 16px;
+        font-weight: 200;
+        width: 100%;
+        margin: 0px 0px 6px 38px;
+        color: #a0a0a0;
+      }
+
+      .column {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .row {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 0px 22px 0px 22px;
+      }
+
+      .rowItem {
+        flex-basis: 0%;
+        flex-shrink: 1;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .key {
+        font-weight: 500;
+        color: #a0a0a0;
+        flex-grow: 4
+      }
+
+      .value {
+        font-weight: 600;
+        color: #383838;
+        flex-grow: 6;
+      }
+
+    </style>
+    <!-- <script type="text/javascript" src="https://dl.frontapp.com/libs/frontjs.min.js"></script> -->
     <script type="text/javascript" src="index.js"></script>
   </head>
-  <body class="front-plugin">
-    <button onClick="unassign()">Unassign</button>
-    <button onClick="toggleArchive()">Archive/Unarchive</button>
-    <button onClick="toggleTrashed()">Trash/Untrash</button>
-    <button onClick="reply()">Reply</button>
-    <button onClick="alertDialog()">Pop alert dialog</button>
-    <button onClick="confirmDialog()">Pop confirm dialog</button>
-    <button onClick="promptDialog()">Pop prompt dialog</button>
-    <button onclick="fetchTeammates()">Fetch teammates</button>
-    <button onclick="fetchInboxes()">Fetch inboxes</button>
+  <body onload="loadContact()">
+    <div class="plugin-div">
+      <span id="name" class="font name"></span>
+      <span id="handle" class="font handle"></span>
+
+      <div class="separator"></div>
+
+      <div class="font title">Info</div>
+      <div class="column">
+        <div class="row">
+          <div class="rowItem key font">Id</div>
+          <div class="rowItem value font" id="id"></div>
+        </div>
+
+        <div class="row">
+          <div class="rowItem key font">Location</div>
+          <div class="rowItem value font" id="location"></div>
+        </div>
+
+        <div class="row">
+          <div class="rowItem key font">Status</div>
+          <div class="rowItem value font" id="status"></div>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="font title">Notes</div>
+      <div class="column" id="notes">
+      </div>
+    </div>
   </body>
 </html>

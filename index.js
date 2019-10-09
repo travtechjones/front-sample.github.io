@@ -1,82 +1,128 @@
-var conversation;
-
-function unassign() {
-  console.log('unassign', Front);
-  Front.unassign(conversation);
+const contact = {
+  id: "crd_55c8c149",
+  handle: "john.doe@frontapp.com",
+  initials: "J",
+  display_name: "John Doe",
+  description: "Unknown.jpeg",
+  avatar: null,
+  color: "hsl(47,60%,70%)",
+  source: "email",
+  role: "reply-to",
+  num_notes: 0
 }
 
-function toggleArchive() {
-  Front.toggleArchive(conversation);
+function loadContact() {
+  const name = document.getElementById("name");
+  const handle = document.getElementById("handle");
+
+  name.innerHTML = contact.display_name;
+  handle.innerHTML = contact.handle;
+
+  const crmData = mockQueryCRM(contact.handle);
+  console.log('crmDasdfta', crmData);
+
+  const id = document.getElementById("id");
+  const location = document.getElementById("location");
+  const status = document.getElementById("status");
+
+  id.innerHTML = crmData.info.id;
+  location.innerHTML = crmData.info.location;
+  status.innerHTML = crmData.info.status;
+
+  const noteColumns = document.getElementById("notes");
+  crmData.notes.forEach(note => {
+    let noteTitle = document.createElement("p");
+    let noteTitleText = document.createTextNode(`${note.date} - ${note.author}`);
+    noteTitle.classList.add("row", "bold", "font");
+    noteTitle.appendChild(noteTitleText);
+
+    let noteBlurb = document.createElement("p");
+    let noteBlurbText = document.createTextNode(note.blurb);
+    noteBlurb.classList.add("row", "font");
+    noteBlurb.appendChild(noteBlurbText);
+
+
+    noteColumns.appendChild(noteTitle);
+    noteColumns.appendChild(noteBlurb);
+  })
+    // avatar.classList.add("avatar");
 }
 
-function toggleTrashed() {
-  Front.toggleTrashed(conversation);
+function mockQueryCRM(email) {
+  const info = {
+    id: Math.floor(Math.random() * 1000),
+    location: 'Fake Company HQ',
+    status: statuses[Math.floor(Math.random() * 4)]
+  }
+
+  const note1Index = Math.floor(Math.random() * 8);
+  const note2Index = Math.floor(Math.random() * 8);
+  let notes = [];
+  notes.push(notesSamples[note1Index]);
+  notes.push(notesSamples[note2Index === note1Index ? note1Index + 1 : note2Index]);
+  return {notes, info};
 }
 
-function reply() {
-  Front.reply({
-    body: 'Template reply',
-    subject: 'Template subject',
-  }, false, conversation);
-}
+const statuses = ['Open', 'Closed', 'Won', 'Blocked'];
+const notesSamples = [
+  {
+    date: "10/10/19",
+    author: "Phillip Fry",
+    blurb: "Great talk. I think we're ready to make a sale."
+  },
+  {
+    date: "10/10/19",
+    author: "Professor Fansworth",
+    blurb: "Lead confused about the offering."
+  },
+  {
+    date: "10/12/19",
+    author: "Leela",
+    blurb: "Missed their call.  Intending to call back"
+  },
+  {
+    date: "10/01/19",
+    author: "Bender",
+    blurb: "Congrats on the sale!"
+  },
+  {
+    date: "07/10/19",
+    author: "Doctor Zoidberg",
+    blurb: "Good luck next time."
+  },
+  {
+    date: "08/19/19",
+    author: "Hermes Conrad",
+    blurb: "I've moved the meeting."
+  },
+  {
+    date: "9/23/19",
+    author: "Amy Wong",
+    blurb: "Does that all make sense?"
+  },
+  {
+    date: "9/28/19",
+    author: "Scruffy",
+    blurb: "Yes! Looking forward to it."
+  },
+  {
+    date: "04/15/19",
+    author: "Kif Kroker",
+    blurb:  "Running late, be there in 5."
+  },
+  {
+    date: "01/01/19",
+    author: "Richard Nixon",
+    blurb: "Haroo!"
+  }
+]
 
-function alertDialog() {
-  Front.dialog('alert', {
-    title: 'I\'m an alert dialog',
-    message: 'You are now alerted',
-  }, function () {
-    console.log('Alert closed');
-  });
-}
 
-function confirmDialog() {
-  Front.dialog('confirm', {
-    title: 'I\'m a confirm dialog',
-    message: 'Do you confirm',
-    okTitle: 'OK Button',
-    cancelTitle: 'Cancel Button'
-  }, function (confirmed) {
-    if (confirmed)
-      console.log('User confirmed');
-    else
-      console.log('User cancelled');
-  });
-}
 
-function promptDialog() {
-  Front.dialog('prompt', {
-    title: 'I\'m a prompt dialog',
-    message: 'Please enter something'
-  }, function (data) {
-    if (data)
-      console.log('User input :', data);
-    else
-      console.log('User cancelled');
-  });
-}
-
-function fetchTeammates() {
-  Front.fetchAllowedTeammates(function (teammates) {
-    if (!teammates)
-      return;
-
-    console.log(teammates);
-  });
-}
-
-function fetchInboxes() {
-  Front.fetchInboxes(function (inboxes) {
-    if (!inboxes)
-      return;
-
-    console.log(inboxes);
-  });
-}
-
-Front.on('conversation', function (data) {
-  console.log('Conversation', data.conversation);
-  console.log('Contact', data.contact);
-  console.log('Message', data.message);
-  console.log('OtherMessages', data.otherMessages);
-  conversation = data.conversation;
-});
+// Front.on('conversation', function (data) {
+//   console.log('Conversation', data.conversation);
+//   console.log('Contact', data.contact);
+//   console.log('Message', data.message);
+//   console.log('OtherMessages', data.otherMessages);
+//   conversation = data.conversation;
+// });
