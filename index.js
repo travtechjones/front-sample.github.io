@@ -1,6 +1,8 @@
 // Loads the contact once the body of the plugin is loaded.
 // This will call our CRM service for mocked data and then add the contact info and notes to the page.
 function loadContact(contact) {
+  const noteColumns = document.getElementById("notes");
+  noteColumns.innerHTML = "";
   if (!contact)
     return;
 
