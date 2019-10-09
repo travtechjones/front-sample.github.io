@@ -33,22 +33,22 @@ function loadContact(contact) {
 
 // Displays Front contact information.
 function displayContactInfo (display_name, handle) {
-  const name = document.getElementById("name");
-  const handle = document.getElementById("handle");
+  const nameElement = document.getElementById("name");
+  const handleElement = document.getElementById("handle");
 
-  name.innerHTML = display_name;
-  handle.innerHTML = handle;
+  nameElement.innerHTML = display_name;
+  handleElement.innerHTML = handle;
 }
 
 // Displays mocked CRM Info.
 function displayCRMInfo (id, location, status) {
-  const id = document.getElementById("id");
-  const location = document.getElementById("location");
-  const status = document.getElementById("status");
+  const idElement = document.getElementById("id");
+  const locationElement = document.getElementById("location");
+  const statusElement = document.getElementById("status");
 
-  id.innerHTML = id;
-  location.innerHTML = location;
-  status.innerHTML = status;
+  idElement.innerHTML = id;
+  locationElement.innerHTML = location;
+  statusElement.innerHTML = status;
 }
 
 // Displays the mocked CRM notes.
