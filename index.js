@@ -1,24 +1,19 @@
-const contact = {
-  id: "crd_55c8c149",
-  handle: "john.doe@frontapp.com",
-  initials: "J",
-  display_name: "John Doe",
-  description: "Unknown.jpeg",
-  avatar: null,
-  color: "hsl(47,60%,70%)",
-  source: "email",
-  role: "reply-to",
-  num_notes: 0
-}
-function loadContact() {
+// Loads the contact once the body of the plugin is loaded.
+// This will call our CRM service for mocked data and then add the contact info and notes to the page.
+function loadContact(contact) {
+  if (!contact)
+    return;
+
   const crmData = mockQueryCRM(contact.handle);
-  displayContact(crmData);
+  displayContact(contact, crmData);
 }
 
-function displayContact(crmData) {
+// Ingests our crmData and adds the data to our plugin.
+function displayContact(contact, crmData) {
   const name = document.getElementById("name");
   const handle = document.getElementById("handle");
 
+  // Use information from our Front `conversation` event to load contact information.
   name.innerHTML = contact.display_name;
   handle.innerHTML = contact.handle;
 
@@ -30,7 +25,10 @@ function displayContact(crmData) {
   location.innerHTML = crmData.info.location;
   status.innerHTML = crmData.info.status;
 
+  // Find our Note columns object.
   const noteColumns = document.getElementById("notes");
+
+  // Then add each Note to the Note Columns object.
   crmData.notes.forEach(note => {
     let noteBlock = document.createElement("div");
 
@@ -52,11 +50,19 @@ function displayContact(crmData) {
   });
 }
 
+Front.on('conversation', function (data) {
+  console.log('Conversation', data.conversation);
+  console.log('Contact', data.contact);
+  console.log('Message', data.message);
+  console.log('OtherMessages', data.otherMessages);
+  loadContact(data.contact)
+});
 
 
+//Code below this comment is just mocked data and can be used as a black box, or altered to be used as a sandbox.
 
-
-//////////////////////////////////////////////////////////////
+// This function returns mock CRM data and is being used as an analog for your functionality being added to the plugin.  
+// This simply picks random data and organizes it.
 function mockQueryCRM(email) {
   const info = {
     id: Math.floor(Math.random() * 1000),
@@ -72,6 +78,7 @@ function mockQueryCRM(email) {
   return {notes, info};
 }
 
+// Here's some fake CRM data to display in the plugin.
 const statuses = ['Open', 'Closed', 'Won', 'Blocked'];
 const notesSamples = [
   {
@@ -124,14 +131,18 @@ const notesSamples = [
     author: "Richard Nixon",
     blurb: "Haroo!"
   }
-]
+];
 
-
-
-// Front.on('conversation', function (data) {
-//   console.log('Conversation', data.conversation);
-//   console.log('Contact', data.contact);
-//   console.log('Message', data.message);
-//   console.log('OtherMessages', data.otherMessages);
-//   conversation = data.conversation;
-// });
+// // Our mock contact object.
+// const contact = {
+//   id: "crd_55c8c149",
+//   handle: "john.doe@frontapp.com",
+//   initials: "J",
+//   display_name: "John Doe",
+//   description: "Unknown.jpeg",
+//   avatar: null,
+//   color: "hsl(47,60%,70%)",
+//   source: "email",
+//   role: "reply-to",
+//   num_notes: 0
+// }
