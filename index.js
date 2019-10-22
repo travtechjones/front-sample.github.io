@@ -17,16 +17,6 @@ Front.on('no_conversation', function () {
   clearNotes();
 });
 
-// function onLoad() {
-//   const contact = {
-//     display_name: "ayy lmao",
-//     handle: "8675309"
-//   };
-
-//   showInfo();
-//   loadContact(contact);
-// }
-
 function showInfo() {
   const infoButton = document.getElementById("infoButton");
   const notesButton = document.getElementById("notesButton");
@@ -114,7 +104,6 @@ function displayNotes(notes) {
     let noteBlurbText = document.createTextNode(note.blurb);
     noteBlurb.classList.add("row", "font");
     noteBlurb.appendChild(noteBlurbText);
-
 
     noteBlock.appendChild(noteHeader);
     noteBlock.appendChild(noteBlurb);
