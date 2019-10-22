@@ -2,9 +2,16 @@
 // This object can be used to listen to conversation event data as it occurs on Front, and request information and to perform actions on Front.
 // See what all it can do here: https://dev.frontapp.com/plugin.html
 
+// This keeps back if Front has returned a conversation to the plugin.
+let hasConversation;
+
 // Listen for the `conversation` event from Front and print its contents, then load the contact to the plugin.
 Front.on('conversation', function (data) {
   console.log('Event data', data);
+
+  // Set the state.
+  hasConversation = true;
+
   // Load the Contact information based off of the event data. And set tab to Info.
   loadContact(data.contact);
   showInfo();
@@ -13,6 +20,9 @@ Front.on('conversation', function (data) {
 // Listen for the `no_conversation` event.  This can happen when opened to Inbox Zero.
 Front.on('no_conversation', function () {
   console.log('No conversation');
+
+  // Set the state.
+  hasConversation = false;
 
   // Display `No Contact` data and clear the notes and set the tab to Info.
   displayContactInfo ("No Contact", "-");
@@ -37,6 +47,11 @@ function loadContact(contact) {
 
 // Create another note to add to the list. 
 function createNote() {
+  if (!hasConversation) {
+    console.log('No conversation selected.');
+    return;
+  }
+
   const note = mockPostNote();
   displayNote(note);
 }
