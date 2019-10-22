@@ -1,7 +1,7 @@
 // Listen for the `conversation` event from Front and print its contents, then load the contact to the plugin.
 Front.on('conversation', function (data) {
   console.log('Event data', data);
-
+  showInfo();
   // Load the Contact information based off of the event data.
   loadContact(data.contact);
 });
@@ -10,11 +10,46 @@ Front.on('conversation', function (data) {
 Front.on('no_conversation', function () {
   console.log('No conversation');
 
+  showInfo();
   // Display `No Contact` data and clear the notes.
   displayContactInfo ("No Contact", "-");
   displayCRMInfo("-", "-", "-");
   clearNotes();
 });
+
+// function onLoad() {
+//   const contact = {
+//     display_name: "ayy lmao",
+//     handle: "8675309"
+//   };
+
+//   showInfo();
+//   loadContact(contact);
+// }
+
+function showInfo() {
+  const infoButton = document.getElementById("infoButton");
+  const notesButton = document.getElementById("notesButton");
+  infoButton.classList.add('selected');
+  notesButton.classList.remove('selected');
+
+  const infoSection = document.getElementById("infoSection");
+  infoSection.classList.remove("displayNone");
+  const notesSection = document.getElementById("notesSection");
+  notesSection.classList.add("displayNone");
+}
+
+function showNotes() {
+  const infoButton = document.getElementById("infoButton");
+  const notesButton = document.getElementById("notesButton");
+  infoButton.classList.remove('selected');
+  notesButton.classList.add('selected');
+
+  const infoSection = document.getElementById("infoSection");
+  infoSection.classList.add("displayNone");
+  const notesSection = document.getElementById("notesSection");
+  notesSection.classList.remove("displayNone");
+}
 
 // Loads the contact once the body of the plugin is loaded.
 // This will call our mocked CRM service for data and then add the contact information and notes to the page.
@@ -59,20 +94,29 @@ function displayNotes(notes) {
   // Add each Note to the Notes Column object.
   notes.forEach(note => {
     let noteBlock = document.createElement("div");
+    noteBlock.classList.add("noteBlock");
 
-    let noteTitle = document.createElement("p");
-    let noteTitleText = document.createTextNode(`${note.date} - ${note.author}`);
-    noteTitle.classList.add("row", "bold", "font");
-    noteTitle.appendChild(noteTitleText);
+    let noteHeader = document.createElement("p");
+    noteHeader.classList.add("row");
+
+    let noteHeaderAuthor = document.createElement("div");
+    noteHeaderAuthor.innerHTML = note.author;
+    noteHeaderAuthor.classList.add("font", "noteKey");
+
+    let noteHeaderTime = document.createElement("div");
+    noteHeaderTime.innerHTML = note.time;
+    noteHeaderTime.classList.add("font", "noteValue");
+
+    noteHeader.appendChild(noteHeaderAuthor);
+    noteHeader.appendChild(noteHeaderTime);
 
     let noteBlurb = document.createElement("p");
     let noteBlurbText = document.createTextNode(note.blurb);
     noteBlurb.classList.add("row", "font");
     noteBlurb.appendChild(noteBlurbText);
-    noteBlurb.classList.add("noteBlock");
 
 
-    noteBlock.appendChild(noteTitle);
+    noteBlock.appendChild(noteHeader);
     noteBlock.appendChild(noteBlurb);
     noteColumns.appendChild(noteBlock);
   });

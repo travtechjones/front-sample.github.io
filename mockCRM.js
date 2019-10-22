@@ -19,43 +19,43 @@ function mockQueryCRM(email) {
 const mockStatuses = ['Open', 'Closed', 'Won', 'Blocked'];
 const mockNotesSamples = [
   {
-    date: "10/10/19",
     author: "Phillip Fry",
-    blurb: "I think we're ready to make a sale."
+    blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    time: "10m"
   },
   {
-    date: "10/10/19",
     author: "Professor Farnsworth",
-    blurb: "Lead confused about the offering."
+    blurb: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    time: "15m"
   },
   {
-    date: "10/12/19",
     author: "Turanga Leela",
-    blurb: "Missed their call."
+    blurb: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    time: "20m"
   },
   {
-    date: "10/01/19",
     author: "Bender Rodriguez",
-    blurb: "Congrats on the sale!"
+    blurb: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    time: "25m"
   },
   {
-    date: "07/10/19",
     author: "Doctor Zoidberg",
-    blurb: "Running late. Be there in 5!"
+    blurb: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    time: "30m"
   },
   {
-    date: "08/19/19",
     author: "Hermes Conrad",
-    blurb: "I've moved the meeting."
+    blurb: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    time: "30m"
   },
   {
-    date: "9/23/19",
     author: "Amy Wong",
-    blurb: "Does that all make sense?"
+    blurb: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    time: "35m"
   },
   {
-    date: "9/28/19",
     author: "Scruffy",
-    blurb: "Yes! Looking forward to it."
+    blurb: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    time: "40m"
   }
 ];
