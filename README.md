@@ -6,3 +6,5 @@ This is a simple example plugin with a mocked CRM service with fake data to show
 You can use this sample as a starting point to begin developing, but you must host the plugin yourself and include our library.  Otherwise, you may use any framework or library you wish, just add `<script src="https://dl.frontapp.com/libs/frontjs.min.js"></script>`.  We have just used VanillaJS/HTML/CSS for simplicity.
 
 For more information about Front's Plugin API, visit the documentation here: https://dev.frontapp.com/plugin.html
+
+![Front Sample Plugin](/frontSamplePlugin.gif)
